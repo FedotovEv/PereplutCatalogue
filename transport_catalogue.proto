@@ -1,0 +1,108 @@
+﻿syntax = "proto3";
+
+import "map_renderer.proto";
+import "graph.proto";
+
+package TransCatSerial;
+
+message StopNameToVertex
+{
+    uint32 stop_name_num = 1;
+    uint32 vertex_id = 2;
+}
+
+message StopNameToVertexList
+{
+    repeated StopNameToVertex stop_name_to_vertex = 1;
+}
+
+message EdgeDescriptor
+{
+    enum EdgeType
+    {
+        EDGE_UNKNOWN = 0;
+        EDGE_STAGE = 1;
+        EDGE_TRANSFER = 2;
+    }
+    EdgeType edge_type = 1;
+    uint32 from_stop_num = 2;
+    uint32 to_stop_num = 3;
+    uint32 bus_name_num = 4;
+    uint32 span_count = 5;
+    double time_length = 6;
+}
+
+message EdgeToDesc
+{
+    uint32 edge_id = 1;
+    EdgeDescriptor edge_descriptor = 2;
+}
+
+message EdgeToDescList
+{
+    repeated EdgeToDesc edge_to_desc = 1;
+}
+
+message Coordinates
+{
+    double lat = 1;
+    double lng = 2;
+}
+
+message DistanceToStop
+{
+    uint32 stop_num = 1;
+    double distance = 2;
+}
+
+message Stop
+{
+    enum StopType
+    {
+        STOPTYPE_UNDEFINED = 0;
+        STOPTYPE_ORDINAR = 1;
+    }
+    StopType stop_type = 1;
+    bytes stop_name = 2;
+    Coordinates stop_coords = 3;
+    repeated uint32 buses_at_stop = 4;
+    repeated DistanceToStop distance_to_stop = 5;
+}
+
+message Bus
+{
+    enum BusType
+    {
+        BUSTYPE_UNDEFINED = 0;
+        BUSTYPE_ORDINAR = 1;
+        BUSTYPE_CIRCULAR = 2;
+    }
+    BusType bus_type = 1;
+    bytes bus_name = 2;
+    repeated uint32 bus_stops = 3;
+}
+
+message StopList
+{
+    repeated Stop stops = 1;
+}
+
+message BusList
+{
+    repeated Bus buses = 2;
+}
+
+message TransportCatalogue
+{
+    StopList stops = 1;
+    BusList buses = 2;
+    RouterContext router_context = 3;
+    MapRendererContext render_context = 4;
+    bool is_routes_data = 5;
+    StopNameToVertexList stop_name_to_enter_vertex = 6;
+    StopNameToVertexList stop_name_to_exit_vertex = 7;
+    EdgeToDescList edge_to_desc = 8;
+    Edges edges = 9;
+    IncidenceLists incidence_lists = 10;
+    RoutesData routes_data = 11;
+}

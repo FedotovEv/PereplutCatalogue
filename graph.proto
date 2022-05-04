@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package TransCatSerial;
+
+message Edge
+{
+    uint32 from = 1;
+    uint32 to = 2;
+    double weight = 3;
+}
+
+message Edges
+{
+    repeated Edge edges = 1;
+}
+
+message IncidenceList
+{
+    repeated uint32 edge_id = 1;
+}
+
+message IncidenceLists
+{
+    repeated IncidenceList incidence_list = 1;
+}
+
+message RouteData
+{
+    bool has_value = 1;
+    double weight = 2;
+    bool has_prev_edge_value = 3;
+    uint32 prev_edge = 4;
+}
+
+message RoutesSecIndexData
+{
+    repeated RouteData sec_routes_data = 1;
+}
+
+message RoutesData
+{
+    repeated RoutesSecIndexData first_routes_data = 1;
+}

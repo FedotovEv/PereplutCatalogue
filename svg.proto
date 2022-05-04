@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package TransCatSerial;
+
+message Point
+{
+    double x = 1;
+    double y = 2;
+}
+
+message Color
+{
+    enum ColorEncodingType
+    {
+        COLORTYPE_UNDEFINED = 0;
+        COLORTYPE_STRING = 1;
+        COLORTYPE_RGB = 2;
+        COLORTYPE_RGBA = 3;
+    }
+    ColorEncodingType encoding_type = 1;
+    uint32 red = 2;
+    uint32 green = 3;
+    uint32 blue = 4;
+    double opacity = 5;
+    bytes color_name = 6;
+}
